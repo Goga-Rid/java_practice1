@@ -49,5 +49,27 @@ public class DatabaseManager {
             return books;
         }
     }
+
+    public String findBookByTitle (String title) throws SQLException {
+        String sql = "SELECT * FROM books WHERE title = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, title);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("id") + " написана " + resultSet.getString("author");
+                }
+            }
+        }
+        return "not found";
+    }
+
+    public void deleteBook (int id) throws SQLException {
+        String sql = "DELETE FROM books WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+        System.out.println("SUCCESSFULLY delete book!");
+    }
 }
 

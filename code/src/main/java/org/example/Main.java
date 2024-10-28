@@ -9,8 +9,10 @@ public class Main {
 
         try {
             dbManager.connect();
-            dbManager.addBook("Принц и нищий", "Марк Твен", Date.valueOf("1881-01-11"), "11241421");
-            System.out.println(dbManager.getAllBooks());
+//            dbManager.addBook("Принц и нищий", "Марк Твен", Date.valueOf("1881-01-11"), "11241421");
+//            System.out.println(dbManager.getAllBooks());
+            System.out.println(dbManager.findBookByTitle("Принц и нищий"));
+//            dbManager.deleteBook(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
