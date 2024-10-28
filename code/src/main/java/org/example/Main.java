@@ -1,5 +1,6 @@
 package org.example;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class Main {
@@ -8,8 +9,16 @@ public class Main {
 
         try {
             dbManager.connect();
+            dbManager.addBook("Принц и нищий", "Марк Твен", Date.valueOf("1881-01-11"), "11241421");
+            System.out.println(dbManager.getAllBooks());
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                dbManager.disconnect();
+            } catch (SQLException e){
+                throw new RuntimeException(e);
+            }
         }
 
     }
