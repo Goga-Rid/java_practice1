@@ -21,3 +21,7 @@
 - JDBC
 - Gradle (Kotlin)
 - Dotenv
+
+## Дока по работе с JDBC
+
+https://www.baeldung.com/java-jdbc
