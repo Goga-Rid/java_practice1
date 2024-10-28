@@ -9,10 +9,14 @@ public class Main {
 
         try {
             dbManager.connect();
-//            dbManager.addBook("Принц и нищий", "Марк Твен", Date.valueOf("1881-01-11"), "11241421");
-//            System.out.println(dbManager.getAllBooks());
+            dbManager.addBook("Принц и нищий", "Марк Твен", Date.valueOf("1881-01-11"), "2131321");
+            System.out.println(dbManager.getAllBooks());
             System.out.println(dbManager.findBookByTitle("Принц и нищий"));
-//            dbManager.deleteBook(1);
+            dbManager.deleteBook(1);
+            dbManager.addReader("Goga", "dsfda@gmail.com");
+            System.out.println(dbManager.getAllReaders());
+            System.out.println(dbManager.findReaderByEmail("dsfda@gmail.com"));
+            dbManager.deleteReader(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

@@ -56,20 +56,64 @@ public class DatabaseManager {
             stmt.setString(1, title);
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getString("id") + " написана " + resultSet.getString("author");
+                    return "\n" + "id книги:" + resultSet.getString("id") + " || автор книги: " + resultSet.getString("author") + "\n";
                 }
             }
         }
         return "not found";
     }
 
-    public void deleteBook (int id) throws SQLException {
+    public String deleteBook (int id) throws SQLException {
         String sql = "DELETE FROM books WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
-        System.out.println("SUCCESSFULLY delete book!");
+        return "SUCCESS delete book";
+    }
+
+    public void addReader (String name, String email) throws SQLException {
+        String sql = "INSERT INTO readers (name, email) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.executeUpdate();
+            stmt.close();
+            System.out.println("SUCCESSFULLY add reader!");
+        }
+    }
+
+    public List<String> getAllReaders () throws SQLException {
+        String sql = "SELECT * FROM readers";
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet resultSet = stmt.executeQuery()) {
+            List<String> readers = new ArrayList<>();
+            while (resultSet.next()) {
+                readers.add(resultSet.getString("name"));
+            }
+            return readers;
+        }
+    }
+
+    public String findReaderByEmail (String email) throws SQLException {
+        String sql = "SELECT * FROM readers WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return "\n" + "id пользователя: " + resultSet.getString("id") + " || Имя: " + resultSet.getString("name") + "\n";
+                }
+            }
+        }
+        return "not found";
+    }
+
+    public String deleteReader (int id) throws SQLException {
+        String sql = "DELETE FROM readers WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+        return "SUCCESS delete reader";
     }
 }
 
